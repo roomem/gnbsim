@@ -14,6 +14,7 @@ import (
 type InterfaceMessage interface {
 	GetEventType() EventType
 	GetErrorMsg() error
+	Payload string // Optional field to carry additional information
 }
 
 type DefaultMessage struct {

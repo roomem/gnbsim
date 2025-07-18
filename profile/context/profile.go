@@ -87,6 +87,7 @@ type Profile struct {
 	StartIteration string         `yaml:"startiteration" json:"startiteration"`
 	Plmn           *models.PlmnId `yaml:"plmnId" json:"plmnId"`
 	SNssai         *models.Snssai `yaml:"sNssai" json:"sNssai"`
+	PayloadText		string			`yaml:"payloadText"` // Testo da inviare nel pacchetto UDP
 	Log            *zap.SugaredLogger
 
 	// Profile routine reads messages from other entities on this channel
@@ -193,6 +194,14 @@ func initProcedureEventMap() {
 		common.PROFILE_PASS_EVENT: common.QUIT_EVENT,
 	}
 	ProceduresMap[common.USER_DATA_PKT_GENERATION_PROCEDURE] = &proc9
+
+	// common.UL_UE_DATA_TRANSFER_EVENT:
+	proc10 := ProcedureEventsDetails{}
+	proc10.Events = map[common.EventType]common.EventType{
+		common.UL_INFO_TRANSFER_EVENT: common.UL_INFO_TRANSFER_EVENT,
+		common.PROFILE_PASS_EVENT:     common.QUIT_EVENT,
+	}
+	ProceduresMap[common.UL_UE_DATA_TRANSFER_EVENT] = &proc10
 }
 
 func (profile *Profile) Init() error {
@@ -275,8 +284,12 @@ func initProcedureList(profile *Profile) error {
 		}
 
 	case CUSTOM_PROCEDURE:
-		// Custom Profiles do not have prefdefined procedure list
-		return nil
+		profile.Procedures = []common.ProcedureType{
+			common.REGISTRATION_PROCEDURE,
+			common.PDU_SESSION_ESTABLISHMENT_PROCEDURE,
+			common.UL_UE_DATA_TRANSFER_EVENT,
+			common.USER_DATA_PKT_GENERATION_PROCEDURE,
+		}
 
 	default:
 		return fmt.Errorf("profile type not supported: %v", profile.ProfileType)

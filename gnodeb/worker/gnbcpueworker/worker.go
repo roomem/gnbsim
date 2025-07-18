@@ -27,6 +27,7 @@ func HandleEvents(gnbue *gnbctx.GnbCpUe) (err error) {
 		case common.REG_REQUEST_EVENT, common.SERVICE_REQUEST_EVENT:
 			HandleInitialUEMessage(gnbue, msg)
 		case common.UL_INFO_TRANSFER_EVENT:
+			//msg.Set
 			HandleUlInfoTransfer(gnbue, msg)
 		case common.DATA_BEARER_SETUP_RESPONSE_EVENT:
 			HandleDataBearerSetupResponse(gnbue, msg)

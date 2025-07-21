@@ -7,6 +7,7 @@ package gnbcpueworker
 import (
 	"github.com/omec-project/gnbsim/common"
 	gnbctx "github.com/omec-project/gnbsim/gnodeb/context"
+	"fmt"
 )
 
 func Init(gnbue *gnbctx.GnbCpUe) {
@@ -27,8 +28,11 @@ func HandleEvents(gnbue *gnbctx.GnbCpUe) (err error) {
 		case common.REG_REQUEST_EVENT, common.SERVICE_REQUEST_EVENT:
 			HandleInitialUEMessage(gnbue, msg)
 		case common.UL_INFO_TRANSFER_EVENT:
-			//msg.intfcMsg->Payload = "Mock Payload" // Example of setting a payload
+			fmt.Println("1 - Handling UL Info Transfer Event")
+			msg.intfcMsg->Payload = "Mock Payload" // Example of setting a payload
+			fmt.Println("2 - Payload set:", msg.intfcMsg.Payload)
 			HandleUlInfoTransfer(gnbue, msg)
+			fmt.Println("3 - UL Info Transfer Event handled")
 		case common.DATA_BEARER_SETUP_RESPONSE_EVENT:
 			HandleDataBearerSetupResponse(gnbue, msg)
 		case common.DOWNLINK_NAS_TRANSPORT_EVENT:

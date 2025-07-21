@@ -19,8 +19,8 @@ func Init(gnbue *gnbctx.GnbCpUe) {
 func HandleEvents(gnbue *gnbctx.GnbCpUe) (err error) {
 	for msg := range gnbue.ReadChan {
 		evt := msg.GetEventType()
-		gnbue.Log.Infoln("Handling event:", evt)
-
+		gnbue.Log.Infoln("Handling event:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA!!!!!!", evt)
+		
 		switch msg.GetEventType() {
 		case common.CONNECTION_REQUEST_EVENT:
 			HandleConnectRequest(gnbue, msg)
